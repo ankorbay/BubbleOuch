@@ -16,6 +16,21 @@ public class PopItElement : MonoBehaviour
     Vector3 touchPosWorld;
     bool areNormalsFlipped = false;
 
+    bool isActive = true;
+    bool isAnimating = false;
+
+    public bool IsActive
+    {
+        get => isActive;
+        private set => isActive = value;
+    }
+
+    public bool IsAnimating
+    {
+        get => isAnimating;
+        private set => isAnimating = value;
+    }
+
     TouchPhase touchPhase = TouchPhase.Ended;
 
     void Start()
@@ -41,7 +56,16 @@ public class PopItElement : MonoBehaviour
             }
         }
 
-        if (transform.localScale.y >= 0f && !areNormalsFlipped) FlipNormals();
+        if (transform.localScale.y >= 0f && !areNormalsFlipped)
+        {
+            FlipNormals();
+        } else if (transform.localScale.y < 0 && areNormalsFlipped)
+        {
+            FlipNormals();
+            IsActive = true;
+            IsAnimating = false;
+        }
+
     }
 
     void FlipNormals()
@@ -68,11 +92,12 @@ public class PopItElement : MonoBehaviour
             mesh.SetTriangles(tris, i);
         }
 
-        areNormalsFlipped = true;
+        areNormalsFlipped = !areNormalsFlipped;
     }
 
     public void Push()
     {
-        transform.DOScaleY(20f, 1f);
+        isAnimating = true;
+        transform.DOScaleY(20f, 1f).OnComplete(() => IsActive = false);
     }
 }

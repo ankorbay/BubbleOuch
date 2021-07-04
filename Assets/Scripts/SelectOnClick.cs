@@ -1,45 +1,56 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
+using System;
 
 public class SelectOnClick : MonoBehaviour
 {
     [SerializeField] GameObject plane;
 
     public GameObject selectedObject;
-    public GameObject highlightedObject;
     public LayerMask selectableLayer;
     Ray ray;
     RaycastHit hitData;
 
+    int PopItElementsCount = 5;
+    PopItElement lastElementTouched;
+    List <PopItElement> popItElements;
+
+    void Start()
+    {
+        popItElements = new List<PopItElement>();
+    }
+
     void Update()
     {
+        //ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hitData, 1000, selectableLayer))
         {
-            highlightedObject = hitData.transform.gameObject;
+            selectedObject = hitData.transform.gameObject;
+            PopItElement shpere = selectedObject.GetComponent<PopItElement>();
 
-            if (Input.GetMouseButtonDown(0))
+            if (shpere != null && shpere.IsActive && !shpere.IsAnimating)
             {
-                selectedObject = hitData.transform.gameObject;
-
-                PopItElement shpere = selectedObject.GetComponent<PopItElement>();
-
-                if (shpere != null)
-                {
-                    shpere.Push();
-                    MovePlaneAfterShpereTouch(selectedObject);
-                }
+                shpere.Push();
+                MovePlaneAfterShpereTouch(selectedObject);
+                lastElementTouched = shpere;
+                popItElements.Add(shpere);
             }
         }
-        else
-        {
-            highlightedObject = null;
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                selectedObject = null;
-            }
+        if (popItElements.Count == PopItElementsCount && !lastElementTouched.IsActive)
+        {
+            RestartLevel();
+        }
+    }
+
+    void RestartLevel()
+    {
+        foreach (var element in popItElements)
+        {
+            element.gameObject.transform.DOScaleY(-40f, 1f).OnComplete(() => popItElements.Remove(element));
         }
     }
 
