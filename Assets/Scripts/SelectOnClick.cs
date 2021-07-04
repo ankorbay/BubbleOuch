@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
-using System;
 
 public class SelectOnClick : MonoBehaviour
 {
@@ -9,12 +8,13 @@ public class SelectOnClick : MonoBehaviour
 
     public GameObject selectedObject;
     public LayerMask selectableLayer;
+
     Ray ray;
     RaycastHit hitData;
-
     int PopItElementsCount = 5;
     PopItElement lastElementTouched;
     List <PopItElement> popItElements;
+
 
     void Start()
     {
@@ -45,6 +45,7 @@ public class SelectOnClick : MonoBehaviour
             RestartLevel();
         }
     }
+
 
     void RestartLevel()
     {

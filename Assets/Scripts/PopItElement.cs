@@ -22,6 +22,7 @@ public class PopItElement : MonoBehaviour
         private set => isAnimating = value;
     }
 
+
     void Start()
     {
         transform.localScale = new Vector3(transform.localScale.x, zValue, transform.localScale.z);
@@ -40,6 +41,7 @@ public class PopItElement : MonoBehaviour
         }
 
     }
+
 
     void FlipNormals()
     {
@@ -67,6 +69,7 @@ public class PopItElement : MonoBehaviour
 
         areNormalsFlipped = !areNormalsFlipped;
     }
+
 
     public void Push()
     {
