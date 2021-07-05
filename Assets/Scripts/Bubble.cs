@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class PopItElement : MonoBehaviour
+public class Bubble : MonoBehaviour
 {
     float zValue = -40f;
     Vector3 touchPosWorld;
@@ -13,7 +13,7 @@ public class PopItElement : MonoBehaviour
     public bool IsActive
     {
         get => isActive;
-        private set => isActive = value;
+        set => isActive = value;
     }
 
     public bool IsAnimating
@@ -25,7 +25,10 @@ public class PopItElement : MonoBehaviour
 
     void Start()
     {
-        transform.localScale = new Vector3(transform.localScale.x, zValue, transform.localScale.z);
+        var transform1 = transform;
+        var localScale = transform1.localScale;
+        localScale = new Vector3(localScale.x, zValue, localScale.z);
+        transform1.localScale = localScale;
     }
 
     void Update()
@@ -36,18 +39,13 @@ public class PopItElement : MonoBehaviour
         } else if (transform.localScale.y < 0 && areNormalsFlipped)
         {
             FlipNormals();
-            IsActive = true;
-            IsAnimating = false;
         }
-
     }
-
 
     void FlipNormals()
     {
-        print("flip");
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
-
+        
         Vector3[] normals = mesh.normals;
         for (int i = 0; i < normals.Length; i++)
         {
@@ -73,7 +71,11 @@ public class PopItElement : MonoBehaviour
 
     public void Push()
     {
-        isAnimating = true;
-        transform.DOScaleY(20f, 1f).OnComplete(() => IsActive = false);
+        IsActive = false;
+        IsAnimating = true;
+        transform.DOScaleY(20f, 1f).OnComplete(() =>
+        {
+            IsAnimating = false;
+        });
     }
 }

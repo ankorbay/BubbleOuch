@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 396415827}
   - component: {fileID: 396415826}
   - component: {fileID: 396415825}
-  - component: {fileID: 396415824}
   m_Layer: 0
   m_Name: shpere_new3 (4)
   m_TagString: Untagged
@@ -157,23 +156,6 @@ Transform:
   m_Father: {fileID: 1152688559}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &396415824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396415822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4578e7be574cd69474bc39840de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 1667635939}
-  selectedObject: {fileID: 0}
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!135 &396415825
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -351,7 +333,6 @@ GameObject:
   - component: {fileID: 867100985}
   - component: {fileID: 867100984}
   - component: {fileID: 867100983}
-  - component: {fileID: 867100982}
   m_Layer: 0
   m_Name: shpere_new3 (2)
   m_TagString: Untagged
@@ -374,23 +355,6 @@ Transform:
   m_Father: {fileID: 1152688559}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &867100982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 867100980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4578e7be574cd69474bc39840de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 1667635939}
-  selectedObject: {fileID: 0}
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!135 &867100983
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -476,7 +440,6 @@ GameObject:
   - component: {fileID: 946816758}
   - component: {fileID: 946816757}
   - component: {fileID: 946816756}
-  - component: {fileID: 946816755}
   m_Layer: 0
   m_Name: shpere_new3 (3)
   m_TagString: Untagged
@@ -499,23 +462,6 @@ Transform:
   m_Father: {fileID: 1152688559}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &946816755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946816753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4578e7be574cd69474bc39840de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 1667635939}
-  selectedObject: {fileID: 0}
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!135 &946816756
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -588,6 +534,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946816753}
   m_Mesh: {fileID: 4711208715938537054, guid: 6d099fec0824f4efaa800bb1f560e1f2, type: 3}
+--- !u!1 &948747545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 948747546}
+  m_Layer: 0
+  m_Name: PlanePivotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &948747546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948747545}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.83, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +778,59 @@ Transform:
   m_Father: {fileID: 1667635940}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &1491926584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1491926586}
+  - component: {fileID: 1491926585}
+  m_Layer: 0
+  m_Name: BubbleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1491926585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491926584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90d2be8d14b443cc8d9ab82b599004f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plane: {fileID: 1667635939}
+  pivotGameObject: {fileID: 948747546}
+  selectableLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  camera: {fileID: 963194227}
+  pushRotationMultiplierCoeff: 1
+  centralBubblePushZShift: 0.08
+  bubblePushedAnimationTime: 0.4
+  restartAnimationDuration: 2
+--- !u!4 &1491926586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491926584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1667635939
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +875,6 @@ GameObject:
   - component: {fileID: 1741442305}
   - component: {fileID: 1741442304}
   - component: {fileID: 1741442303}
-  - component: {fileID: 1741442302}
   m_Layer: 0
   m_Name: shpere_new3 (1)
   m_TagString: Untagged
@@ -869,23 +897,6 @@ Transform:
   m_Father: {fileID: 1152688559}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1741442302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741442300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4578e7be574cd69474bc39840de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 1667635939}
-  selectedObject: {fileID: 0}
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!135 &1741442303
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1033,7 +1044,6 @@ GameObject:
   - component: {fileID: 7404105793357515546}
   - component: {fileID: 9061337616994216657}
   - component: {fileID: 9061337616994216656}
-  - component: {fileID: 9061337616994216658}
   m_Layer: 0
   m_Name: shpere_new3
   m_TagString: Untagged
@@ -1066,20 +1076,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb1fb41962a6475c852fa9fed4d0603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9061337616994216658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9061337616994216655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc4578e7be574cd69474bc39840de8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 1667635939}
-  selectedObject: {fileID: 0}
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
