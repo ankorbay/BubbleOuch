@@ -71,9 +71,9 @@ public class SelectOnClick : MonoBehaviour
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(plane.transform.DORotate(
-                new Vector3(currentXrotation - selectedObject.transform.position.z,
-                            currentYrotation,
-                            currentZrotation - selectedObject.transform.position.x),
+                new Vector3(currentXrotation + selectedObject.transform.position.y,
+                            currentYrotation - selectedObject.transform.position.x,
+                            currentZrotation ),
                 0.2f));
             sequence.Append(plane.transform.DORotate(
                 new Vector3(currentXrotation,
