@@ -31,20 +31,22 @@ public class BubbleController : MonoBehaviour
 
     void Update()
     {
-        //ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-        ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hitData, 1000, selectableLayer))
+        if (Input.touches.Length > 0)
         {
-            selectedObject = hitData.transform.gameObject;
-            Bubble bubble = selectedObject.GetComponent<Bubble>();
-
-            if (bubble != null && bubble.IsActive && !bubble.IsAnimating)
+            ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
+            if (Physics.Raycast(ray, out hitData, 1000, selectableLayer))
             {
-                bubble.Push();
-                MovePlaneAfterShpereTouch(selectedObject);
-                lastBubbleTouched = bubble;
-                bubbles.Add(bubble);
+                selectedObject = hitData.transform.gameObject;
+                Bubble bubble = selectedObject.GetComponent<Bubble>();
+
+                if (bubble != null && bubble.IsActive && !bubble.IsAnimating)
+                {
+                    bubble.Push();
+                    MovePlaneAfterShpereTouch(selectedObject);
+                    lastBubbleTouched = bubble;
+                    bubbles.Add(bubble);
+                    Debug.Log(bubbles.Count);
+                }
             }
         }
 
@@ -81,6 +83,7 @@ public class BubbleController : MonoBehaviour
         }
         bubbles.Clear();
         isFinalAnimationFinished = false;
+        selectedObject = null;
     }
 
     void MovePlaneAfterShpereTouch(GameObject selectedObject)
