@@ -388,7 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90d2be8d14b443cc8d9ab82b599004f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plane: {fileID: 2188432916695944258}
+  plane: {fileID: 419700775}
+  planeChild: {fileID: 2188432916695944258}
   pivotGameObject: {fileID: 1978890244}
   selectedObject: {fileID: 0}
   selectableLayer:
@@ -397,7 +398,8 @@ MonoBehaviour:
   camera: {fileID: 963194227}
   rotationScale: 1
   zShiftOnPush: 0.1
-  bubbleAnimationTime: 0.4
+  bubbleAnimationTime: 0.5
+  planeAnimationTime: 2
 --- !u!4 &1491926586
 Transform:
   m_ObjectHideFlags: 0
@@ -823,6 +825,7 @@ GameObject:
   - component: {fileID: 8960516234994905697}
   - component: {fileID: 2635906169629977753}
   - component: {fileID: 8085846845863003940}
+  - component: {fileID: 8085846845863003941}
   m_Layer: 0
   m_Name: Dimple_square.003
   m_TagString: Untagged
@@ -842,6 +845,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb1fb41962a6475c852fa9fed4d0603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &8085846845863003941
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085846845863003939}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13020906
+  m_Center: {x: 0.000000029802322, y: -0.000000037252896, z: 0.049186762}
 --- !u!1 &8152946835153943940
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +870,7 @@ GameObject:
   - component: {fileID: 2687934730827995916}
   - component: {fileID: 7270917575457017700}
   - component: {fileID: 8152946835153943941}
+  - component: {fileID: 8152946835153943942}
   m_Layer: 0
   m_Name: Dimple_square.004
   m_TagString: Untagged
@@ -873,6 +890,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb1fb41962a6475c852fa9fed4d0603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &8152946835153943942
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152946835153943940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1302101
+  m_Center: {x: -0.00000000745058, y: 0.000000052154046, z: 0.049672578}
 --- !u!4 &8162089386056757371
 Transform:
   m_ObjectHideFlags: 0
@@ -999,6 +1029,7 @@ GameObject:
   - component: {fileID: 2924709489438931641}
   - component: {fileID: 5282265672097663201}
   - component: {fileID: 9067405855057308764}
+  - component: {fileID: 9067405855057308765}
   m_Layer: 0
   m_Name: Dimple_square.002
   m_TagString: Untagged
@@ -1018,3 +1049,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb1fb41962a6475c852fa9fed4d0603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &9067405855057308765
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067405855057308763}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13020991
+  m_Center: {x: -0.000000022351742, y: 0.000000015366828, z: 0.04934255}

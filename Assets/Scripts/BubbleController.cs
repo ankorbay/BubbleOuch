@@ -6,6 +6,7 @@ using DG.Tweening;
 public class BubbleController : MonoBehaviour
 {
     [SerializeField] Transform plane;
+    [SerializeField] Transform planeChild;
     [SerializeField] Transform pivotGameObject;
     [SerializeField] GameObject selectedObject;
     [SerializeField] LayerMask selectableLayer;
@@ -31,6 +32,7 @@ public class BubbleController : MonoBehaviour
     {
         bubbles = new List<Bubble>();
         plane.position = new Vector3(plane.position.x - pivotGameObject.position.x,0f,0f);
+        planeChild.position = new Vector3(plane.position.x + pivotGameObject.position.x,0f,0f);
     }
 
     void Update()
@@ -40,9 +42,6 @@ public class BubbleController : MonoBehaviour
         if (bubbles.Count == BubblesCount && !lastBubbleTouched.IsAnimating && !isPlaneAnimationActive)
         {
             RunPlaneAnimation();
-        } else if (isPlaneAnimationActive)
-        {
-            TrackPlaneRotation();
         }
     }
 
@@ -76,23 +75,17 @@ public class BubbleController : MonoBehaviour
 
     void RunPlaneAnimation()
     {
+        
         isPlaneAnimationActive = true;
         startPlaneRotation = plane.eulerAngles.y;
         endPlaneRotation = startPlaneRotation - 180f;
         plane.DORotate(new Vector3(0f, endPlaneRotation, 0f), planeAnimationTime)
-            .OnComplete(() => isPlaneFlipped = !isPlaneFlipped);
-    }
-
-    void TrackPlaneRotation()
-    {   
-        print("tracking " + plane.eulerAngles.y);
-        if (plane.eulerAngles.y <= 181f)
-        {
-            print("stopped at " + plane.eulerAngles.y);
-            plane.eulerAngles = new Vector3(0f,180f,0f);
-            ActivateBubbles();
-            isPlaneAnimationActive = false;
-        }
+            .OnComplete(() =>
+            {
+                isPlaneFlipped = !isPlaneFlipped;
+                isPlaneAnimationActive = false;
+                ActivateBubbles();
+            });
     }
 
     void ActivateBubbles()
