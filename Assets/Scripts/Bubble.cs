@@ -1,9 +1,9 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
-    float zValue = -40f;
     Vector3 touchPosWorld;
 
     bool areNormalsFlipped = false;
@@ -23,20 +23,18 @@ public class Bubble : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        var transform1 = transform;
-        var localScale = transform1.localScale;
-        localScale = new Vector3(localScale.x, zValue, localScale.z);
-        transform1.localScale = localScale;
-    }
-
     void Update()
     {
-        if (transform.localScale.y >= 0f && !areNormalsFlipped)
+        TrackNormals();
+    }
+
+    private void TrackNormals()
+    {
+        if (transform.localScale.z <= 0f && !areNormalsFlipped)
         {
             FlipNormals();
-        } else if (transform.localScale.y < 0 && areNormalsFlipped)
+        }
+        else if (transform.localScale.z > 0 && areNormalsFlipped)
         {
             FlipNormals();
         }
@@ -68,14 +66,24 @@ public class Bubble : MonoBehaviour
         areNormalsFlipped = !areNormalsFlipped;
     }
 
-
     public void Push()
     {
         IsActive = false;
         IsAnimating = true;
-        transform.DOScaleY(20f, 1f).OnComplete(() =>
+        float endValue = 1f;
+        if (transform.localScale.z > 0f)
+        {
+            endValue = -1f;
+        }
+        else
+        {
+            endValue = 1f;
+        }
+        print("endValue" + endValue);
+        transform.DOScaleZ(endValue, 1f).OnComplete(() =>
         {
             IsAnimating = false;
         });
+
     }
 }

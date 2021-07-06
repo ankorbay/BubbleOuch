@@ -5,73 +5,93 @@ using DG.Tweening;
 
 public class BubbleController : MonoBehaviour
 {
-    [SerializeField] GameObject plane;
+    [SerializeField] Transform plane;
     [SerializeField] Transform pivotGameObject;
+    [SerializeField] GameObject selectedObject;
     [SerializeField] LayerMask selectableLayer;
     [SerializeField] private Camera camera;
 
-    [SerializeField] private float pushRotationMultiplierCoeff = 1f;
-    [SerializeField] private float centralBubblePushZShift = 0.1f;
-    [SerializeField] private float bubblePushedAnimationTime = 0.4f;
-    [SerializeField] private float restartAnimationDuration = 2f;
+    [SerializeField] private float rotationScale = 1f;
+    [SerializeField] private float zShiftOnPush = 0.1f;
+    [SerializeField] private float bubbleAnimationTime = 0.4f;
+    [SerializeField] private float planeAnimationTime = 3f;
 
-    bool isFinalAnimationFinished = false;
-    GameObject selectedObject;
+    bool isPlaneAnimationActive = false;
+    bool isPlaneFlipped = false;
     Ray ray;
     RaycastHit hitData;
-    int BubblesCount = 5;
+    int BubblesCount = 4;
     Bubble lastBubbleTouched;
     List<Bubble> bubbles;
+    float startPlaneRotation;
+    float endPlaneRotation;
 
 
     void Start()
     {
         bubbles = new List<Bubble>();
+        plane.position = new Vector3(plane.position.x - pivotGameObject.position.x,0f,0f);
     }
 
     void Update()
     {
-        if (Input.touches.Length > 0)
-        {
-            ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
-            if (Physics.Raycast(ray, out hitData, 1000, selectableLayer))
-            {
-                selectedObject = hitData.transform.gameObject;
-                Bubble bubble = selectedObject.GetComponent<Bubble>();
+        TrackBubbleCollisions();
 
-                if (bubble != null && bubble.IsActive && !bubble.IsAnimating)
+        if (bubbles.Count == BubblesCount && !lastBubbleTouched.IsAnimating && !isPlaneAnimationActive)
+        {
+            RunPlaneAnimation();
+        } else if (isPlaneAnimationActive)
+        {
+            TrackPlaneRotation();
+        }
+    }
+
+    void TrackBubbleCollisions()
+    {
+        if (!isPlaneAnimationActive)
+        {
+            if (Input.touches.Length > 0)
+            {
+                ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
+                //ray = camera.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hitData, 100, selectableLayer))
                 {
-                    bubble.Push();
-                    MovePlaneAfterShpereTouch(selectedObject);
-                    lastBubbleTouched = bubble;
-                    bubbles.Add(bubble);
-                    Debug.Log(bubbles.Count);
+                    selectedObject = hitData.transform.gameObject;
+                    Bubble bubble = selectedObject.GetComponent<Bubble>();
+
+                    if (bubble != null && bubble.IsActive && !bubble.IsAnimating)
+                    {
+                        bubble.Push();
+                        MovePlaneAfterShpereTouch(selectedObject);
+                        lastBubbleTouched = bubble;
+                        bubbles.Add(bubble);
+                        Debug.Log(bubbles.Count);
+                    }
                 }
             }
-        }
-
-        if (bubbles.Count == BubblesCount && !lastBubbleTouched.IsAnimating && !isFinalAnimationFinished)
-        {
-            PlayFinalAnimation();
         }
     }
 
 
-    void PlayFinalAnimation()
+    void RunPlaneAnimation()
     {
-        plane.transform.RotateAround(pivotGameObject.position, Vector3.up, -100 * Time.deltaTime );
-        if (plane.transform.eulerAngles.y <= 180f)
+        isPlaneAnimationActive = true;
+        startPlaneRotation = plane.eulerAngles.y;
+        endPlaneRotation = startPlaneRotation - 180f;
+        plane.DORotate(new Vector3(0f, endPlaneRotation, 0f), planeAnimationTime)
+            .OnComplete(() => isPlaneFlipped = !isPlaneFlipped);
+    }
+
+    void TrackPlaneRotation()
+    {   
+        print("tracking " + plane.eulerAngles.y);
+        if (plane.eulerAngles.y <= 181f)
         {
-            foreach (var bubble in bubbles)
-            {
-                bubble.gameObject.transform.localScale = new Vector3(100f, -40f, 50f);
-            }
-        } else if (plane.transform.rotation.y > 0f)
-        {
-            print("finished " + plane.transform.rotation.y);
-            plane.transform.rotation = Quaternion.identity;
-            isFinalAnimationFinished = true;
+            print("stopped at " + plane.eulerAngles.y);
+            plane.eulerAngles = new Vector3(0f,180f,0f);
             ActivateBubbles();
+            isPlaneAnimationActive = false;
         }
     }
 
@@ -82,34 +102,38 @@ public class BubbleController : MonoBehaviour
             bubble.IsActive = true;
         }
         bubbles.Clear();
-        isFinalAnimationFinished = false;
         selectedObject = null;
     }
 
     void MovePlaneAfterShpereTouch(GameObject selectedObject)
     {
+        var position = selectedObject.transform.position;
+        
         if (selectedObject.transform.localPosition.x == 0 && selectedObject.transform.localPosition.z == 0)
         {
             Sequence sequence = DOTween.Sequence();
-            var position = plane.transform.position;
-            sequence.Append(plane.transform.DOMoveZ(position.z + centralBubblePushZShift, bubblePushedAnimationTime/2f));
-            sequence.Append(plane.transform.DOMoveZ(position.z, bubblePushedAnimationTime/2f));
+            sequence.Append(plane.DOMoveZ(position.z + zShiftOnPush, bubbleAnimationTime/2f));
+            sequence.Append(plane.DOMoveZ(position.z, bubbleAnimationTime/2f));
         }
         else
         {
-            var eulerAngles = plane.transform.eulerAngles;
+            var eulerAngles = plane.eulerAngles;
+            
             float currentXrotation = eulerAngles.x;
             float currentYrotation = eulerAngles.y;
             float currentZrotation = eulerAngles.z;
 
+            float targetXrotation = currentXrotation + position.y * rotationScale;
+            float targetYrotation = currentYrotation - position.x * rotationScale;
+            if(isPlaneFlipped) targetXrotation = currentXrotation - position.y * rotationScale;
+
             Sequence sequence = DOTween.Sequence();
-            var position = selectedObject.transform.position;
-            sequence.Append(plane.transform.DORotate(
-                new Vector3(currentXrotation + position.y * pushRotationMultiplierCoeff,
-                            currentYrotation - position.x * pushRotationMultiplierCoeff,
+            sequence.Append(plane.DORotate(
+                new Vector3(targetXrotation,
+                                    targetYrotation,
                             currentZrotation),
                 0.2f));
-            sequence.Append(plane.transform.DORotate(
+            sequence.Append(plane.DORotate(
                 new Vector3(currentXrotation,
                             currentYrotation,
                             currentZrotation),
