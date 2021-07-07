@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -439,6 +439,7 @@ MonoBehaviour:
   rootTransform: {fileID: 419700775}
   rootChildTransform: {fileID: 2188432916695944258}
   pivotTransform: {fileID: 1978890244}
+  selectedObject: {fileID: 0}
   rootRotationCoeff: 1
   rootPushAnimationTime: 0.4
   bubbleAnimationTime: 1
@@ -722,7 +723,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 670224309865224971, guid: 6d23b5cd30e7549cf90510a9b746e68c, type: 3}
+  - {fileID: 2100000, guid: 85fc86fbd69f64dd39375ef583371cdb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -983,7 +984,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d09d8393284942a3afe732e3689623c, type: 2}
+  - {fileID: 2100000, guid: 85fc86fbd69f64dd39375ef583371cdb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
