@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
     Ray ray;
     RaycastHit hitData;
     int bubblesInstantiatedCount;
-    GameObject previousObjectTouched;
+    GameObject previousObjectTouched = null;
     Bubble currentBubbleTouched;
     List<Bubble> bubblesTouched;
     float startPlaneRotation;
@@ -73,13 +73,8 @@ public class GameController : MonoBehaviour
                         bubblesTouched.Add(currentBubbleTouched);
                     }
                 }
-            }
-            else
-            {
-                previousObjectTouched = null;
-            }
+            } else if (selectedObject == null) previousObjectTouched = null;
     }
-
 
     void RunPlaneAnimation()
     {
@@ -91,6 +86,7 @@ public class GameController : MonoBehaviour
             {
                 isPlaneFlipped = !isPlaneFlipped;
                 isPlaneAnimationActive = false;
+                previousObjectTouched = null;
                 ActivateBubbles();
             }); // extract
     }

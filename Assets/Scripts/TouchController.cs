@@ -19,7 +19,6 @@ public class TouchController : MonoBehaviour
             // ray = camera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hitData))
-              //  && (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 touchedObject = hitData.transform.gameObject;
             }
