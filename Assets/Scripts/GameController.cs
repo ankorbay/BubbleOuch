@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     float startPlaneRotation;
     float endPlaneRotation;
 
+    
     void Start()
     {
         bubblesTouched = new List<Bubble>();
@@ -55,6 +56,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    
     void TrackBubbleCollisions()
     {
         selectedObject = touchController.GetObjectTouched();
@@ -82,13 +84,15 @@ public class GameController : MonoBehaviour
         endPlaneRotation = startPlaneRotation - ROOT_OBJECT_ROTATION_ON_FINISH;
         if (isPlaneFlipped) endPlaneRotation = startPlaneRotation + ROOT_OBJECT_ROTATION_ON_FINISH;
         rootTransform.DORotate(new Vector3(0f, endPlaneRotation, 0f), rootRestartAnimationTime)
-            .OnComplete(() =>
-            {
-                isPlaneFlipped = !isPlaneFlipped;
-                isPlaneAnimationActive = false;
-                previousObjectTouched = null;
-                ActivateBubbles();
-            }); // extract
+            .OnComplete(ResetRootObject);
+    }
+
+    void ResetRootObject()
+    {
+        isPlaneFlipped = !isPlaneFlipped;
+        isPlaneAnimationActive = false;
+        previousObjectTouched = null;
+        ActivateBubbles();
     }
 
     void ActivateBubbles()
