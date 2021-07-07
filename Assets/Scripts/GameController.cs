@@ -20,8 +20,7 @@ public class GameController : MonoBehaviour
     [SerializeField] float rootRestartAnimationTime = 3f;
 
     [SerializeField] private List<Bubble> bubblesInstantiated;
-
-    private Vector3 initialRootRotation = new Vector3(0f, 0f, 0f);
+    
     bool isPlaneAnimationActive = false;
     bool isPlaneFlipped = false;
     Ray ray;
@@ -32,8 +31,6 @@ public class GameController : MonoBehaviour
     List<Bubble> bubblesTouched;
     float startPlaneRotation;
     float endPlaneRotation;
-    // separate TouchController
-    // learn custom editor creation
 
     void Start()
     {
