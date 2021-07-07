@@ -25,10 +25,10 @@ public class Bubble : MonoBehaviour
 
     void Update()
     {
-        TrackNormals();
+        //TrackNormals();
     }
 
-    private void TrackNormals()
+    void TrackNormals()
     {
         if (transform.localScale.z <= 0f && !areNormalsFlipped)
         {
@@ -66,12 +66,19 @@ public class Bubble : MonoBehaviour
         areNormalsFlipped = !areNormalsFlipped;
     }
 
-    public void Push()
+    
+    public void Push(float duration)
     {
-        IsActive = false;
+        if (!IsActive || IsAnimating)
+        {
+            Debug.Log("You can't push that bubble");
+            return;
+        }
+        IsActive = false; // rename
         IsAnimating = true;
-        float endValue = 1f;
-        if (transform.localScale.z > 0f)
+        
+        float endValue;
+        if (transform.localScale.z > 0f) // to const
         {
             endValue = -1f;
         }
@@ -79,11 +86,15 @@ public class Bubble : MonoBehaviour
         {
             endValue = 1f;
         }
-        print("endValue" + endValue);
-        transform.DOScaleZ(endValue, 1f).OnComplete(() =>
+
+        transform.DOScaleZ(endValue, duration).OnComplete(() =>
         {
             IsAnimating = false;
         });
+    }
 
+    public void Reset()
+    {
+        IsActive = true;
     }
 }

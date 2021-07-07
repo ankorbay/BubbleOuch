@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+
+public class GameController : MonoBehaviour
+{
+    [SerializeField] TouchController touchController;
+    
+    [SerializeField] Transform rootTransform;
+    [SerializeField] Transform rootChildTransform;
+    [SerializeField] Transform pivotTransform;
+    [SerializeField] GameObject selectedObject;
+
+    [SerializeField] float rootRotationCoeff = 1f;
+    [SerializeField] float rootPushAnimationTime = 0.4f;
+    [SerializeField] float bubbleAnimationTime = 1f;
+    [SerializeField] float rootRestartAnimationTime = 3f;
+
+    [SerializeField] private List<Bubble> bubblesInstantiated;
+
+    private Vector3 initialRootRotation = new Vector3(0f, 0f, 0f);
+    bool isPlaneAnimationActive = false;
+    bool isPlaneFlipped = false;
+    Ray ray;
+    RaycastHit hitData;
+    int bubblesInstantiatedCount;
+    GameObject previousObjectTouched;
+    Bubble currentBubbleTouched;
+    List<Bubble> bubblesTouched;
+    float startPlaneRotation;
+    float endPlaneRotation;
+    // separate TouchController
+    // learn custom editor creation
+
+    void Start()
+    {
+        bubblesTouched = new List<Bubble>();
+        bubblesInstantiatedCount = bubblesInstantiated.Count;
+        
+        var rootPosition = rootTransform.position;
+        var pivotPosition = pivotTransform.position;
+        rootPosition = new Vector3(rootPosition.x - pivotPosition.x,0f,0f);
+        
+        rootTransform.position = rootPosition;
+        rootChildTransform.position = new Vector3(rootPosition.x + pivotPosition.x,0f,0f);
+    }
+
+    void Update()
+    {
+        TrackBubbleCollisions();
+
+        if (bubblesTouched.Count == bubblesInstantiatedCount && !currentBubbleTouched.IsAnimating && !isPlaneAnimationActive)
+        {
+            RunPlaneAnimation();
+        }
+    }
+
+    void TrackBubbleCollisions()
+    {
+        selectedObject = touchController.GetObjectTouched();
+
+            if (selectedObject != null && selectedObject != previousObjectTouched)
+            {
+                currentBubbleTouched = selectedObject.GetComponent<Bubble>();
+                if (currentBubbleTouched != null)
+                {
+                    AnimateRootOnTouch(selectedObject);
+                    
+                    if (currentBubbleTouched.IsActive)
+                    {
+                        currentBubbleTouched.Push(bubbleAnimationTime);
+                        bubblesTouched.Add(currentBubbleTouched);
+                    }
+                }
+            }
+            else
+            {
+                previousObjectTouched = null;
+            }
+    }
+
+
+    void RunPlaneAnimation()
+    {
+        isPlaneAnimationActive = true;
+        startPlaneRotation = rootTransform.eulerAngles.y;
+        endPlaneRotation = startPlaneRotation - 180f;
+        rootTransform.DORotate(new Vector3(0f, endPlaneRotation, 0f), rootRestartAnimationTime)
+            .OnComplete(() =>
+            {
+                isPlaneFlipped = !isPlaneFlipped;
+                isPlaneAnimationActive = false;
+                ActivateBubbles();
+            }); // extract
+    }
+
+    void ActivateBubbles()
+    {
+        foreach (var bubble in bubblesTouched)
+        {
+            bubble.Reset();
+        }
+        bubblesTouched.Clear();
+        selectedObject = null;
+    }
+
+    void AnimateRootOnTouch(GameObject selectedObject) // call always on touch
+    {
+        previousObjectTouched = selectedObject;
+        if (isPlaneAnimationActive == true) return;
+        isPlaneAnimationActive = true;
+        var position = selectedObject.transform.position;
+        {
+            var startEulerAngles = rootTransform.eulerAngles;
+
+            float targetXrotation = position.y * rootRotationCoeff;
+            float targetYrotation = - position.x * rootRotationCoeff;
+            if (isPlaneFlipped)
+            {
+                targetXrotation = - position.y * rootRotationCoeff;
+                targetYrotation = 180f - position.x * rootRotationCoeff;
+            }
+            Vector3 targetEulerAngles = new Vector3(targetXrotation, targetYrotation, startEulerAngles.z);
+            
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(rootTransform.DORotate(
+                targetEulerAngles,
+                rootPushAnimationTime/2f));
+            sequence.Append(rootTransform.DORotate(
+                startEulerAngles,
+                rootPushAnimationTime/2f));
+            sequence.OnComplete(() => isPlaneAnimationActive = false);
+        }
+    }
+}
