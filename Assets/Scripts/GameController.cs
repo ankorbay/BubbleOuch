@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
+    private const float ROOT_OBJECT_ROTATION_ON_FINISH = 180f;
+    
     [SerializeField] TouchController touchController;
     
     [SerializeField] Transform rootTransform;
@@ -80,7 +82,8 @@ public class GameController : MonoBehaviour
     {
         isPlaneAnimationActive = true;
         startPlaneRotation = rootTransform.eulerAngles.y;
-        endPlaneRotation = startPlaneRotation - 180f;
+        endPlaneRotation = startPlaneRotation - ROOT_OBJECT_ROTATION_ON_FINISH;
+        if (isPlaneFlipped) endPlaneRotation = startPlaneRotation + ROOT_OBJECT_ROTATION_ON_FINISH;
         rootTransform.DORotate(new Vector3(0f, endPlaneRotation, 0f), rootRestartAnimationTime)
             .OnComplete(() =>
             {
