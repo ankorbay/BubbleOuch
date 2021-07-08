@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] TouchController touchController;
     
     [SerializeField] Transform rootTransform;
-    [SerializeField] Transform rootChildTransform;
+    Transform rootChildTransform;
     [SerializeField] Transform pivotTransform;
     [SerializeField] GameObject selectedObject;
 
@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
     List<Bubble> bubblesTouched;
     float startPlaneRotation;
     float endPlaneRotation;
-
+    
     
     void Start()
     {
@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
         rootPosition = new Vector3(rootPosition.x - pivotPosition.x,0f,0f);
         
         rootTransform.position = rootPosition;
+        rootChildTransform = rootTransform.GetChild(0);
         rootChildTransform.position = new Vector3(rootPosition.x + pivotPosition.x,0f,0f);
     }
 
